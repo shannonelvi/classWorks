@@ -29,155 +29,190 @@
     }
   }
   *{box-sizing:border-box;}
+  html, body{ height:100%; }
   body{
     margin:0; background:var(--bg); color:var(--text);
-    font-family:'Inter',sans-serif; line-height:1.55;
-    padding:48px 24px;
+    font-family:'Inter',sans-serif; line-height:1.5;
+    padding:14px 22px; overflow:hidden;
+    display:flex; flex-direction:column;
   }
-  .page{ max-width:1240px; margin:0 auto; }
-  header{ text-align:center; max-width:680px; margin:0 auto 8px; }
+  .page{ flex:1; min-height:0; display:flex; flex-direction:column; max-width:1680px; margin:0 auto; width:100%; }
+
+  /* top bar */
+  .topbar{
+    display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+    flex-wrap:wrap; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
   .eyebrow{
-    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.14em;
     text-transform:uppercase; color:var(--text-faint);
   }
   h1{
-    font-family:'Fraunces',serif; font-weight:500; font-size:34px;
-    margin:10px 0 10px; letter-spacing:-.01em;
+    font-family:'Fraunces',serif; font-weight:500; font-size:22px;
+    margin:4px 0 3px; letter-spacing:-.01em;
   }
-  header p{ color:var(--text-dim); font-size:15px; margin:0 0 4px; }
-  .controls{ text-align:center; margin:22px 0 0; }
+  .topbar .tagline{ color:var(--text-dim); font-size:12px; margin:0; }
+  .controls{ display:flex; align-items:center; gap:8px; }
   .controls button{
-    font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.04em;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.04em;
     background:var(--bg-card); border:1px solid var(--line); color:var(--text-dim);
-    padding:7px 14px; border-radius:20px; cursor:pointer; margin:0 4px;
+    padding:6px 13px; border-radius:20px; cursor:pointer;
   }
   .controls button:hover{ color:var(--text); border-color:var(--text-dim); }
+  .source-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--text-faint);
+    white-space:nowrap;
+  }
 
-  /* hub */
-  .hub-wrap{ display:flex; flex-direction:column; align-items:center; margin-top:34px; }
+  /* radial mind map */
+  .mindmap{
+    position:relative; flex:1; min-height:0; margin-top:14px;
+    display:grid; gap:14px 22px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1.35fr 1fr 1fr;
+    grid-template-areas:
+      "top      top   top      "
+      "left     hub   right    "
+      "botleft  .     botright ";
+  }
+  #connectorSvg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+
+  .hub-wrap{ grid-area:hub; z-index:2; align-self:center; justify-self:center; display:flex; }
   .hub{
     font-family:'Fraunces',serif; background:var(--bg-card); border:1.5px solid var(--text);
-    border-radius:16px; padding:20px 30px; text-align:center; max-width:420px;
+    border-radius:16px; padding:16px 24px; text-align:center; max-width:280px;
     box-shadow:0 1px 0 var(--line);
   }
-  .hub .hub-title{ font-size:19px; font-weight:500; margin:0 0 6px; }
-  .hub .hub-sub{ font-family:'Inter',sans-serif; font-size:12.5px; color:var(--text-dim); margin:0; }
-  .stem{ width:2px; height:38px; background:var(--line); }
+  .hub .hub-title{ font-size:16.5px; font-weight:500; margin:0 0 5px; line-height:1.25; }
+  .hub .hub-sub{ font-family:'Inter',sans-serif; font-size:11.5px; color:var(--text-dim); margin:0; }
 
-  /* trunk + layered branches */
-  .mindmap{ position:relative; padding-top:40px; max-width:900px; margin:0 auto; }
-  .hline{ position:absolute; top:0; height:2px; background:var(--line); z-index:0; }
-  .connector{ position:absolute; top:0; width:2px; z-index:0; }
-  .connector.connector-h{ width:auto; height:2px; }
+  .branch{
+    position:relative; z-index:1; min-height:0; overflow:hidden;
+    display:flex; flex-direction:column;
+    background:var(--bg-card); border:1px solid var(--line); border-radius:14px;
+    padding:11px 13px 12px; box-shadow:0 1px 0 var(--line);
+  }
+  .branch-goal   { --c:var(--goal);  --tint:var(--goal-tint);  grid-area:left; }
+  .branch-rule   { --c:var(--rule);  --tint:var(--rule-tint);  grid-area:right; }
+  .branch-seq    { --c:var(--seq);   --tint:var(--seq-tint);   grid-area:top; }
+  .branch-pers   { --c:var(--pers);  --tint:var(--pers-tint);  grid-area:botleft; }
+  .branch-strat  { --c:var(--strat); --tint:var(--strat-tint); grid-area:botright; }
 
-  .layer{ display:flex; flex-wrap:wrap; justify-content:center; gap:30px; position:relative; z-index:1; }
-  .layer + .layer{ margin-top:40px; }
-
-  .branch{ position:relative; }
-  .layer1 > .branch{ flex:1 1 0; min-width:0; }
-  .layer2 > .branch, .layer3 > .branch{ width:100%; }
   .branch-head{
     display:flex; align-items:center; gap:8px; background:var(--tint); border:1px solid var(--c);
-    border-radius:12px; padding:11px 13px; margin-bottom:16px;
+    border-radius:10px; padding:8px 11px; margin-bottom:8px; flex:0 0 auto;
   }
-  .branch-head .dot{ width:9px; height:9px; border-radius:50%; background:var(--c); flex:0 0 9px; }
-  .branch-head span{ font-family:'Fraunces',serif; font-size:14.5px; font-weight:500; color:var(--c); }
+  .branch-head .dot{ width:8px; height:8px; border-radius:50%; background:var(--c); flex:0 0 8px; }
+  .branch-head span{ font-family:'Fraunces',serif; font-size:13px; font-weight:500; color:var(--c); }
 
-  .branch-goal   { --c:var(--goal);  --tint:var(--goal-tint); }
-  .branch-rule   { --c:var(--rule);  --tint:var(--rule-tint); }
-  .branch-seq    { --c:var(--seq);   --tint:var(--seq-tint); }
-  .branch-pers   { --c:var(--pers);  --tint:var(--pers-tint); }
-  .branch-strat  { --c:var(--strat); --tint:var(--strat-tint); }
-
-  .leaves{ position:relative; padding-left:16px; }
+  .leaves{
+    position:relative; padding-left:13px; flex:1; min-height:0; overflow-y:auto;
+  }
   .leaves::before{
-    content:''; position:absolute; left:0; top:2px; bottom:14px; width:1.5px; background:var(--line);
+    content:''; position:absolute; left:0; top:2px; bottom:10px; width:1.5px; background:var(--line);
   }
+  .leaves::-webkit-scrollbar{ width:6px; }
+  .leaves::-webkit-scrollbar-thumb{ background:var(--line); border-radius:3px; }
+
+  /* the email-sequence branch carries the most content, so it spans the full
+     top row and lays its cards out two-up instead of stacking them narrow */
+  .branch-seq .leaves{
+    padding-left:0; display:grid; grid-template-columns:1fr 1fr; align-content:start;
+    gap:8px 14px;
+  }
+  .branch-seq .leaves::before{ display:none; }
+  .branch-seq details.leaf::before{ display:none; }
+  .branch-seq details.leaf:first-child{ grid-column:1 / -1; }
+
   details.leaf{
-    position:relative; margin-bottom:10px; background:var(--bg-card); border:1px solid var(--line);
-    border-radius:10px; padding:0; overflow:hidden;
+    position:relative; margin-bottom:7px; background:var(--bg-card); border:1px solid var(--line);
+    border-radius:9px; padding:0; overflow:hidden;
   }
   details.leaf::before{
-    content:''; position:absolute; left:-16px; top:18px; width:16px; height:1.5px; background:var(--line);
+    content:''; position:absolute; left:-13px; top:15px; width:13px; height:1.5px; background:var(--line);
   }
   details.leaf summary{
-    list-style:none; cursor:pointer; padding:11px 13px; font-size:13px; font-weight:500;
+    list-style:none; cursor:pointer; padding:8px 10px; font-size:11.8px; font-weight:500;
     display:flex; justify-content:space-between; align-items:center; gap:8px;
   }
   details.leaf summary::-webkit-details-marker{ display:none; }
   details.leaf summary::after{
-    content:'+'; font-family:'IBM Plex Mono',monospace; color:var(--c); font-size:14px; flex:0 0 auto;
+    content:'+'; font-family:'IBM Plex Mono',monospace; color:var(--c); font-size:13px; flex:0 0 auto;
   }
   details.leaf[open] summary::after{ content:'–'; }
   details.leaf[open] summary{ border-bottom:1px solid var(--line); }
   .leaf-tag{
-    font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.05em; text-transform:uppercase;
+    font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.05em; text-transform:uppercase;
     color:var(--c); display:block; margin-bottom:2px;
   }
-  .leaf-body{ padding:12px 13px 14px; font-size:12.8px; color:var(--text-dim); }
-  .meta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:10px; }
-  .meta-item{ flex:1 1 120px; }
+  .leaf-body{ padding:9px 10px 11px; font-size:11.8px; color:var(--text-dim); }
+  .meta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+  .meta-item{ flex:1 1 110px; }
   .meta-item .k{
-    font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.05em;
+    font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.05em;
     color:var(--c); display:block; margin-bottom:2px;
   }
-  .meta-item .v{ font-size:12px; color:var(--text); }
-  .email-card{ background:var(--tint); border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-top:8px; }
-  .email-card + .email-card{ margin-top:10px; }
-  .subj{ font-size:12.5px; font-weight:600; color:var(--text); margin:0 0 6px; }
+  .meta-item .v{ font-size:11px; color:var(--text); }
+  .email-card{ background:var(--tint); border:1px solid var(--line); border-radius:8px; padding:9px 11px; margin-top:7px; }
+  .email-card + .email-card{ margin-top:9px; }
+  .subj{ font-size:11.5px; font-weight:600; color:var(--text); margin:0 0 5px; }
   .subj em{ font-style:normal; color:var(--text-faint); font-weight:400; }
-  .body-text p{ margin:0 0 8px; font-size:12.3px; color:var(--text-dim); }
+  .body-text p{ margin:0 0 7px; font-size:11.3px; color:var(--text-dim); }
   .body-text p:last-child{ margin-bottom:0; }
   .branch-tag{
-    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.04em;
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:.04em;
     text-transform:uppercase; background:var(--tint); color:var(--c); border:1px solid var(--c);
     border-radius:5px; padding:1px 6px; margin-right:6px;
   }
-  table.glance{ width:100%; border-collapse:collapse; font-size:11.5px; margin-top:2px; }
-  table.glance th, table.glance td{ text-align:left; padding:5px 6px; border-bottom:1px solid var(--line); }
-  table.glance th{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-faint); font-weight:500; }
-  footer{ text-align:center; margin-top:60px; font-size:11.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; }
+  table.glance{ width:100%; border-collapse:collapse; font-size:10.8px; margin-top:2px; }
+  table.glance th, table.glance td{ text-align:left; padding:4px 5px; border-bottom:1px solid var(--line); }
+  table.glance th{ font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-faint); font-weight:500; }
 
-  @media (max-width:900px){
-    .layer{ gap:22px; }
-    .layer1 > .branch, .layer2 > .branch, .layer3 > .branch{ width:100%; flex:1 1 100%; max-width:440px; }
-    .connector, .hline{ display:none; }
+  @media (max-width:1100px), (max-height:680px){
+    body{ overflow-y:auto; height:auto; }
+    .mindmap{
+      display:flex; flex-direction:column; gap:18px; margin-top:18px;
+    }
+    #connectorSvg{ display:none; }
+    .hub-wrap{ order:-1; justify-self:stretch; }
+    .hub{ max-width:100%; }
+    .branch{ width:100%; max-height:none; overflow:visible; }
+    .leaves{ overflow-y:visible; max-height:none; }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <header>
-    <span class="eyebrow">Automated email sequence</span>
-    <h1>USC alumni research interviews</h1>
-    <p>Every node below is drawn from the campaign spec, in full — click any card to expand it.</p>
-  </header>
-
-  <div class="controls">
-    <button id="expandAll">Expand all</button>
-    <button id="collapseAll">Collapse all</button>
-  </div>
-
-  <div class="hub-wrap">
-    <div class="hub">
-      <p class="hub-title">USC alumni research interview sequence</p>
-      <p class="hub-sub">Automated outreach → book a 20-minute research interview</p>
+  <div class="topbar">
+    <div class="titles">
+      <span class="eyebrow">Automated email sequence</span>
+      <h1>USC alumni research interviews</h1>
+      <p class="tagline">Every node is drawn from the campaign spec, in full — click any card to expand it.</p>
     </div>
-    <div class="stem"></div>
+    <div class="controls">
+      <button id="expandAll">Expand all</button>
+      <button id="collapseAll">Collapse all</button>
+      <span class="source-tag">usc-finance-interview</span>
+    </div>
   </div>
 
   <div class="mindmap" id="mindmap">
-    <div class="hline" id="hline"></div>
+    <svg id="connectorSvg"></svg>
 
-    <div class="layer layer1">
+    <div class="hub-wrap">
+      <div class="hub">
+        <p class="hub-title">USC alumni research interview sequence</p>
+        <p class="hub-sub">Automated outreach → book a 20-minute research interview</p>
+      </div>
+    </div>
 
     <!-- BRANCH 1: CAMPAIGN SETUP -->
     <div class="branch branch-goal">
       <div class="branch-head"><span class="dot"></span><span>Campaign setup</span></div>
       <div class="leaves">
 
-        <details class="leaf" open>
+        <details class="leaf">
           <summary>Conversion goal</summary>
           <div class="leaf-body">
             <p>Book a 20-minute research interview with a USC-connected professional in private equity, M&amp;A diligence, or financial services, to learn how they organize and manage deal data.</p>
@@ -199,7 +234,7 @@
       <div class="branch-head"><span class="dot"></span><span>The governing rule</span></div>
       <div class="leaves">
 
-        <details class="leaf" open>
+        <details class="leaf">
           <summary>Reply detection exits the sequence</summary>
           <div class="leaf-body">
             <p>The instant a contact replies, they leave the automated flow and a person takes over scheduling. No lead should ever receive an automated "just bumping this" email after they've already answered — it's the fastest way to look like a bot and lose a warm alum.</p>
@@ -257,10 +292,6 @@
 
       </div>
     </div>
-
-    </div>
-
-    <div class="layer layer2">
 
     <!-- BRANCH: EMAIL SEQUENCE -->
     <div class="branch branch-seq">
@@ -420,10 +451,6 @@
       </div>
     </div>
 
-    </div>
-
-    <div class="layer layer3">
-
     <!-- BRANCH: STRATEGY RATIONALE -->
     <div class="branch branch-strat">
       <div class="branch-head"><span class="dot"></span><span>Strategy rationale</span></div>
@@ -463,11 +490,8 @@
       </div>
     </div>
 
-    </div>
-
   </div>
 
-  <footer>usc-finance-interview · automated outreach sequence</footer>
 </div>
 
 <script>
@@ -478,71 +502,68 @@
     document.querySelectorAll('details.leaf').forEach(d => d.open = false);
   });
 
+  // Straight spokes from the hub to each of the 5 branch cards, clipped to
+  // touch each box's edge rather than running through its interior — the
+  // classic radial mind-map look.
+  function edgePoint(cx, cy, hw, hh, dx, dy){
+    if (dx === 0 && dy === 0) return { x: cx, y: cy };
+    const scaleX = dx !== 0 ? hw / Math.abs(dx) : Infinity;
+    const scaleY = dy !== 0 ? hh / Math.abs(dy) : Infinity;
+    const scale = Math.min(scaleX, scaleY);
+    return { x: cx + dx * scale, y: cy + dy * scale };
+  }
+
   function drawConnectors(){
     const mindmap = document.getElementById('mindmap');
-    const hline = document.getElementById('hline');
-    if (!mindmap || window.innerWidth <= 900) return;
+    const svg = document.getElementById('connectorSvg');
+    const hub = document.querySelector('.hub');
+    if (!mindmap || !svg || !hub || window.innerWidth <= 1100 || window.innerHeight <= 680) {
+      if (svg) svg.innerHTML = '';
+      return;
+    }
 
     const mmRect = mindmap.getBoundingClientRect();
-    const headRect = sel => document.querySelector(sel).getBoundingClientRect();
-    const point = r => ({ x: r.left + r.width / 2 - mmRect.left, top: r.top - mmRect.top });
+    svg.setAttribute('width', mmRect.width);
+    svg.setAttribute('height', mmRect.height);
+    svg.innerHTML = '';
+
+    const hubRect = hub.getBoundingClientRect();
+    const hubCenter = {
+      x: hubRect.left + hubRect.width / 2 - mmRect.left,
+      y: hubRect.top + hubRect.height / 2 - mmRect.top
+    };
     const color = name => getComputedStyle(document.querySelector('.branch-' + name)).getPropertyValue('--c').trim();
+    const branches = ['seq', 'goal', 'rule', 'pers', 'strat'];
 
-    const goalR = headRect('.branch-goal .branch-head');
-    const ruleR = headRect('.branch-rule .branch-head');
-    const persR = headRect('.branch-pers .branch-head');
-    const goal = point(goalR), rule = point(ruleR), pers = point(persR);
-    const seq = point(headRect('.branch-seq .branch-head'));
-    const strat = point(headRect('.branch-strat .branch-head'));
+    branches.forEach(name => {
+      const el = document.querySelector('.branch-' + name);
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const bc = { x: r.left + r.width / 2 - mmRect.left, y: r.top + r.height / 2 - mmRect.top };
+      const dx = bc.x - hubCenter.x, dy = bc.y - hubCenter.y;
+      const p1 = edgePoint(hubCenter.x, hubCenter.y, hubRect.width / 2, hubRect.height / 2, dx, dy);
+      const p2 = edgePoint(bc.x, bc.y, r.width / 2, r.height / 2, -dx, -dy);
 
-    // Row-1 columns are evenly spaced, so the horizontal trunk spans their centers.
-    const xs = [goal.x, rule.x, pers.x];
-    hline.style.left = Math.min(...xs) + 'px';
-    hline.style.width = (Math.max(...xs) - Math.min(...xs)) + 'px';
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', p1.x);
+      line.setAttribute('y1', p1.y);
+      line.setAttribute('x2', p2.x);
+      line.setAttribute('y2', p2.y);
+      line.setAttribute('stroke', color(name));
+      line.setAttribute('stroke-width', '2');
+      svg.appendChild(line);
 
-    // Layer 2/3 sit centered below the row and would otherwise share row-1's
-    // middle x exactly — fan their lines through the row-1 gaps so all 5
-    // connectors stay visible instead of painting over one another.
-    const gapLeftX = (goalR.right + ruleR.left) / 2 - mmRect.left;
-    const gapRightX = (ruleR.right + persR.left) / 2 - mmRect.left;
-    const jog = 22;
-
-    mindmap.querySelectorAll('.connector').forEach(el => el.remove());
-
-    function vline(x, y1, y2, c){
-      const d = document.createElement('div');
-      d.className = 'connector';
-      d.style.left = (x - 1) + 'px';
-      d.style.top = y1 + 'px';
-      d.style.height = Math.max(0, y2 - y1) + 'px';
-      d.style.background = c;
-      mindmap.appendChild(d);
-    }
-    function hseg(x1, x2, y, c){
-      const d = document.createElement('div');
-      d.className = 'connector connector-h';
-      d.style.left = Math.min(x1, x2) + 'px';
-      d.style.top = (y - 1) + 'px';
-      d.style.width = Math.abs(x2 - x1) + 'px';
-      d.style.background = c;
-      mindmap.appendChild(d);
-    }
-    function fannedConnector(gapX, target, c){
-      vline(gapX, 0, target.top - jog, c);
-      hseg(gapX, target.x, target.top - jog, c);
-      vline(target.x, target.top - jog, target.top, c);
-    }
-
-    vline(goal.x, 0, goal.top, color('goal'));
-    vline(rule.x, 0, rule.top, color('rule'));
-    vline(pers.x, 0, pers.top, color('pers'));
-    fannedConnector(gapLeftX, seq, color('seq'));
-    fannedConnector(gapRightX, strat, color('strat'));
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', p1.x);
+      dot.setAttribute('cy', p1.y);
+      dot.setAttribute('r', '3');
+      dot.setAttribute('fill', color(name));
+      svg.appendChild(dot);
+    });
   }
 
   window.addEventListener('load', drawConnectors);
   window.addEventListener('resize', drawConnectors);
-  document.addEventListener('toggle', drawConnectors, true);
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(drawConnectors);
   }

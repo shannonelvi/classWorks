@@ -29,62 +29,66 @@
     }
   }
   *{box-sizing:border-box;}
+  html,body{ height:100%; }
   body{
     margin:0; background:var(--bg); color:var(--text);
-    font-family:'Inter',sans-serif; line-height:1.55;
-    padding:56px 24px 120px;
+    font-family:'Inter',sans-serif; line-height:1.5;
+    padding:16px 20px 14px; display:flex; flex-direction:column; align-items:center;
   }
-  .page{ max-width:1180px; margin:0 auto; }
-  header{ text-align:center; max-width:680px; margin:0 auto 8px; }
+  .page{ width:100%; max-width:1100px; display:flex; flex-direction:column; align-items:center; }
+  header{ text-align:center; max-width:640px; }
   .eyebrow{
-    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.14em;
     text-transform:uppercase; color:var(--text-faint);
   }
   h1{
-    font-family:'Fraunces',serif; font-weight:500; font-size:34px;
-    margin:10px 0 10px; letter-spacing:-.01em;
+    font-family:'Fraunces',serif; font-weight:500; font-size:22px;
+    margin:5px 0 3px; letter-spacing:-.01em;
   }
-  header p{ color:var(--text-dim); font-size:15px; margin:0 0 4px; }
-  .controls{ text-align:center; margin:22px 0 0; }
+  header p{ color:var(--text-dim); font-size:12px; margin:0; }
+  .controls{ margin:8px 0 0; }
   .controls button{
-    font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.04em;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.04em;
     background:var(--bg-card); border:1px solid var(--line); color:var(--text-dim);
-    padding:7px 14px; border-radius:20px; cursor:pointer; margin:0 4px;
+    padding:5px 12px; border-radius:20px; cursor:pointer; margin:0 3px;
   }
   .controls button:hover{ color:var(--text); border-color:var(--text-dim); }
 
-  /* hub */
-  .hub-wrap{ display:flex; flex-direction:column; align-items:center; margin-top:34px; }
-  .hub{
-    font-family:'Fraunces',serif; background:var(--bg-card); border:1.5px solid var(--text);
-    border-radius:16px; padding:20px 30px; text-align:center; max-width:420px;
-    box-shadow:0 1px 0 var(--line); position:relative; z-index:2;
+  .diagram{
+    position:relative; margin-top:6px;
+    display:grid;
+    grid-template-columns: 320px 320px 320px;
+    grid-template-rows: 264px 100px 264px;
+    column-gap:22px; row-gap:22px;
   }
-  .hub .hub-title{ font-size:19px; font-weight:500; margin:0 0 6px; }
-  .hub .hub-sub{ font-family:'Inter',sans-serif; font-size:12.5px; color:var(--text-dim); margin:0; }
-  .stem{ width:2px; height:26px; background:var(--line); }
-
-  /* diagram frame */
-  .diagram{ position:relative; margin-top:0; padding-right:64px; }
   svg.connectors{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:visible; }
-  .trunk{ position:absolute; top:0; left:0; right:0; height:2px; background:var(--line); z-index:1; }
 
-  .row{ position:relative; z-index:2; }
-  .layer1-row{ display:flex; gap:22px; padding-top:40px; }
-  .layer1-row > .branch{ flex:1 1 0; min-width:0; }
-  .layer2-row{ padding-top:40px; }
-  .layer3-row{ padding-top:40px; }
+  .hub-cell{ grid-column:2; grid-row:2; display:flex; align-items:center; justify-content:center; z-index:2; position:relative; }
+  .hub{
+    font-family:'Fraunces',serif; background:var(--bg-card); border:2px solid var(--text);
+    border-radius:16px; padding:14px 20px; text-align:center; width:100%; height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .hub .hub-title{ font-size:15.5px; font-weight:500; margin:0 0 5px; line-height:1.25; }
+  .hub .hub-sub{ font-family:'Inter',sans-serif; font-size:10.5px; color:var(--text-dim); margin:0; line-height:1.3; }
 
-  .branch{ position:relative; }
-  .branch-head{
-    display:flex; align-items:center; gap:8px; background:var(--tint); border:1px solid var(--c);
-    border-radius:12px; padding:11px 13px; margin-bottom:16px;
+  .pos-tl{ grid-column:1; grid-row:1; }
+  .pos-tc{ grid-column:2; grid-row:1; }
+  .pos-tr{ grid-column:3; grid-row:1; }
+  .pos-bl{ grid-column:1; grid-row:3; }
+  .pos-br{ grid-column:3; grid-row:3; }
+
+  .branch{
+    position:relative; z-index:2; background:var(--bg-card); border:1.5px solid var(--c);
+    border-radius:14px; padding:11px; display:flex; flex-direction:column; overflow:hidden;
   }
-  .branch-head .dot{ width:9px; height:9px; border-radius:50%; background:var(--c); flex:0 0 9px; }
-  .branch-head span{ font-family:'Fraunces',serif; font-size:14.5px; font-weight:500; color:var(--c); }
-  .branch-head .count{
-    margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text-faint);
+  .branch-title{
+    display:flex; align-items:center; gap:7px; font-family:'Fraunces',serif; font-size:13.5px;
+    font-weight:500; color:var(--c); margin-bottom:8px; flex:0 0 auto;
   }
+  .branch-title .dot{ width:8px; height:8px; border-radius:50%; background:var(--c); flex:0 0 8px; }
+  .branch-title .count{ margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-faint); }
 
   .branch-goal   { --c:var(--goal);  --tint:var(--goal-tint); }
   .branch-rule   { --c:var(--rule);  --tint:var(--rule-tint); }
@@ -92,65 +96,56 @@
   .branch-pers   { --c:var(--pers);  --tint:var(--pers-tint); }
   .branch-strat  { --c:var(--strat); --tint:var(--strat-tint); }
 
-  /* layer2 / layer3 use a horizontal card layout for leaves so the wide row is used well */
-  .leaves{ position:relative; padding-left:16px; }
-  .leaves::before{
-    content:''; position:absolute; left:0; top:2px; bottom:14px; width:1.5px; background:var(--line);
-  }
-  .leaves.grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px 14px; padding-left:16px; }
-  .leaves.grid::before{ bottom:2px; }
+  .leaves-scroll{ flex:1 1 auto; overflow-y:auto; padding-right:3px; }
+  .leaves-scroll::-webkit-scrollbar{ width:5px; }
+  .leaves-scroll::-webkit-scrollbar-thumb{ background:var(--line); border-radius:3px; }
 
   details.leaf{
-    position:relative; margin-bottom:10px; background:var(--bg-card); border:1px solid var(--line);
-    border-radius:10px; padding:0; overflow:hidden; align-self:start;
-  }
-  .leaves.grid details.leaf{ margin-bottom:0; }
-  details.leaf::before{
-    content:''; position:absolute; left:-16px; top:18px; width:16px; height:1.5px; background:var(--line);
+    position:relative; margin-bottom:6px; background:var(--tint); border:1px solid var(--line);
+    border-radius:8px; padding:0; overflow:hidden;
   }
   details.leaf summary{
-    list-style:none; cursor:pointer; padding:11px 13px; font-size:13px; font-weight:500;
-    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    list-style:none; cursor:pointer; padding:7px 9px; font-size:11.3px; font-weight:500;
+    display:flex; justify-content:space-between; align-items:center; gap:6px; line-height:1.3;
   }
   details.leaf summary::-webkit-details-marker{ display:none; }
   details.leaf summary::after{
-    content:'+'; font-family:'IBM Plex Mono',monospace; color:var(--c); font-size:14px; flex:0 0 auto;
+    content:'+'; font-family:'IBM Plex Mono',monospace; color:var(--c); font-size:12px; flex:0 0 auto;
   }
   details.leaf[open] summary::after{ content:'–'; }
   details.leaf[open] summary{ border-bottom:1px solid var(--line); }
   .leaf-tag{
-    font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.05em; text-transform:uppercase;
+    font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:.05em; text-transform:uppercase;
     color:var(--c); display:block; margin-bottom:2px;
   }
-  .leaf-body{ padding:12px 13px 14px; font-size:12.8px; color:var(--text-dim); }
-  .meta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:10px; }
-  .meta-item{ flex:1 1 120px; }
+  .leaf-body{ padding:8px 9px 10px; font-size:11px; color:var(--text-dim); background:var(--bg-card); }
+  .meta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:7px; }
+  .meta-item{ flex:1 1 100px; }
   .meta-item .k{
-    font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.05em;
+    font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; letter-spacing:.05em;
     color:var(--c); display:block; margin-bottom:2px;
   }
-  .meta-item .v{ font-size:12px; color:var(--text); }
-  .email-card{ background:var(--tint); border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-top:8px; }
-  .email-card + .email-card{ margin-top:10px; }
-  .subj{ font-size:12.5px; font-weight:600; color:var(--text); margin:0 0 6px; }
+  .meta-item .v{ font-size:10.5px; color:var(--text); }
+  .email-card{ background:var(--tint); border:1px solid var(--line); border-radius:7px; padding:8px 9px; margin-top:6px; }
+  .email-card + .email-card{ margin-top:8px; }
+  .subj{ font-size:11px; font-weight:600; color:var(--text); margin:0 0 5px; }
   .subj em{ font-style:normal; color:var(--text-faint); font-weight:400; }
-  .body-text p{ margin:0 0 8px; font-size:12.3px; color:var(--text-dim); }
+  .body-text p{ margin:0 0 6px; font-size:10.6px; color:var(--text-dim); }
   .body-text p:last-child{ margin-bottom:0; }
   .branch-tag{
-    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.04em;
-    text-transform:uppercase; background:var(--tint); color:var(--c); border:1px solid var(--c);
-    border-radius:5px; padding:1px 6px; margin-right:6px;
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.04em;
+    text-transform:uppercase; background:var(--bg-card); color:var(--c); border:1px solid var(--c);
+    border-radius:5px; padding:1px 5px; margin-right:5px;
   }
-  table.glance{ width:100%; border-collapse:collapse; font-size:11.5px; margin-top:2px; }
-  table.glance th, table.glance td{ text-align:left; padding:5px 6px; border-bottom:1px solid var(--line); }
-  table.glance th{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-faint); font-weight:500; }
-  footer{ text-align:center; margin-top:60px; font-size:11.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; }
+  .glance-list{ display:flex; flex-direction:column; gap:4px; }
+  .glance-row{ display:flex; gap:6px; align-items:baseline; font-size:10.3px; }
+  .glance-row .gnum{
+    font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--c); flex:0 0 16px;
+  }
+  .glance-row .gtext b{ color:var(--text); font-weight:600; }
+  .glance-row .gtext i{ color:var(--text-faint); font-style:normal; }
 
-  @media (max-width:820px){
-    .diagram{ padding-right:44px; }
-    .layer1-row{ flex-direction:column; }
-    .leaves.grid{ grid-template-columns:1fr; }
-  }
+  footer{ text-align:center; margin-top:10px; font-size:9.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; }
 </style>
 </head>
 <body>
@@ -167,304 +162,295 @@
     <button id="collapseAll">Collapse all</button>
   </div>
 
-  <div class="hub-wrap">
-    <div class="hub">
-      <p class="hub-title">USC alumni research interview sequence</p>
-      <p class="hub-sub">Automated outreach → book a 20-minute research interview</p>
-    </div>
-    <div class="stem"></div>
-  </div>
-
   <div class="diagram" id="diagram">
-    <div class="trunk" id="trunk"></div>
     <svg class="connectors" id="connectors"></svg>
 
-    <!-- LAYER 1: three branches side by side -->
-    <div class="row layer1-row">
-
-      <div class="branch branch-goal" id="b-goal">
-        <div class="branch-head"><span class="dot"></span><span>Campaign setup</span></div>
-        <div class="leaves">
-
-          <details class="leaf" open>
-            <summary>Conversion goal</summary>
-            <div class="leaf-body">
-              <p>Book a 20-minute research interview with a USC-connected professional in private equity, M&amp;A diligence, or financial services, to learn how they organize and manage deal data.</p>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Entry trigger — Day 0 starts</summary>
-            <div class="leaf-body">
-              <p>A contact is added to the outreach segment — the outreach-list equivalent of a "signup." In a marketing-automation platform this is the enrollment trigger: enter the sequence, tag <code>usc-finance-interview</code>, start Day 0.</p>
-            </div>
-          </details>
-
-        </div>
-      </div>
-
-      <div class="branch branch-rule" id="b-rule">
-        <div class="branch-head"><span class="dot"></span><span>The governing rule</span></div>
-        <div class="leaves">
-
-          <details class="leaf" open>
-            <summary>Reply detection exits the sequence</summary>
-            <div class="leaf-body">
-              <p>The instant a contact replies, they leave the automated flow and a person takes over scheduling. No lead should ever receive an automated "just bumping this" email after they've already answered — it's the fastest way to look like a bot and lose a warm alum.</p>
-              <p>Every send in this sequence carries the implicit condition: <em>only if no reply has been received.</em></p>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Two positive off-ramps</summary>
-            <div class="leaf-body">
-              <p>Booking via the scheduling link exits the sequence entirely.</p>
-              <p>Clicking the link but not finishing the booking routes to a short booking-recovery note (Email A) rather than the next nurture email.</p>
-            </div>
-          </details>
-
-        </div>
-      </div>
-
-      <div class="branch branch-pers" id="b-pers">
-        <div class="branch-head"><span class="dot"></span><span>Micro-personas</span></div>
-        <div class="leaves">
-
-          <details class="leaf">
-            <summary>The Generous Mentor</summary>
-            <div class="leaf-body">
-              <p>Senior alum (Partner / MD / Principal). Time-poor but emotionally motivated to give back and mentor students. Moved by Trojan identity, legacy, and being thanked rather than sold to.</p>
-              <p><span class="leaf-tag">Targeted by</span>Email 1's "fellow Trojan" open, and Email 4, which thanks them for what they do for the USC community and leaves the door open with zero guilt.</p>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>The Busy Operator</summary>
-            <div class="leaf-body">
-              <p>Mid-to-senior alum (VP / Director). Slammed, protective of time, and instinctively reads outreach as a sales trap. Needs specificity, brevity, the explicit "not pitching," and a one-tap path.</p>
-              <p><span class="leaf-tag">Targeted by</span>Email 1's low-friction framing, Email 2 (respect for time, the 15-minute flex, top-of-inbox), and the scheduling link throughout.</p>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>The Curious Peer</summary>
-            <div class="leaf-body">
-              <p>Junior alum (Associate / Senior Associate). Recently a student, intellectually engaged, relates to the research itself. Won't move for "help a student," but will move for an interesting idea.</p>
-              <p><span class="leaf-tag">Targeted by</span>Email 3, which leads with the substantive finding, shrinks the ask to one question, and offers to share the group's results — a peer-to-peer exchange rather than a favor.</p>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Why this covers everyone</summary>
-            <div class="leaf-body">
-              <p>Each persona is reached by a different email, so a single sequence covers the whole recipient spectrum without segmenting the list up front — the branching and the shifting objective of each send do the segmentation for you.</p>
-              <p style="font-size:11.5px;color:var(--text-faint);">Note from the source doc: if your course requires your own validated micro-personas, swap these in — the sequence structure maps cleanly onto whichever set you're graded against.</p>
-            </div>
-          </details>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- LAYER 2: email sequence, full width, below layer 1 -->
-    <div class="row layer2-row">
-      <div class="branch branch-seq" id="b-seq">
-        <div class="branch-head"><span class="dot"></span><span>Email sequence</span><span class="count">6 sends</span></div>
-        <div class="leaves grid">
-
-          <details class="leaf">
-            <summary>Sequence at a glance</summary>
-            <div class="leaf-body">
-              <table class="glance">
-                <tr><th>#</th><th>Send</th><th>Trigger</th><th>Objective</th></tr>
-                <tr><td>1</td><td>Day 0</td><td>Contact added to segment</td><td>Reply / book</td></tr>
-                <tr><td>2</td><td>Day 4</td><td>No reply + 4-day delay</td><td>Reply (top-of-inbox)</td></tr>
-                <tr><td>3</td><td>Day 9</td><td>No reply + 5-day delay</td><td>Engagement / click</td></tr>
-                <tr><td>4</td><td>Day 16</td><td>No reply + 7-day delay</td><td>Final reply / clean exit</td></tr>
-                <tr><td>A</td><td>+24h</td><td>Clicked link, no booking</td><td>Complete the booking</td></tr>
-                <tr><td>C</td><td>On booking</td><td>Interview booked</td><td>Reduce no-shows</td></tr>
-              </table>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Email 1 · Day 0 — "The Ask"</summary>
-            <div class="leaf-body">
-              <div class="meta-row">
-                <div class="meta-item"><span class="k">Trigger</span><span class="v">Contact enters the segment</span></div>
-                <div class="meta-item"><span class="k">Objective</span><span class="v">Reply or direct booking</span></div>
-              </div>
-              <p><span class="leaf-tag">Automation</span>Send immediately on enrollment; start open-tracking and link-tracking; set the 4-day timer for Email 2.</p>
-              <div class="email-card">
-                <p class="subj">Subject: <em>USC student research — 20 min on how you manage deal data?</em></p>
-                <div class="body-text">
-                  <p>Hi [Name],</p>
-                  <p>I'm [Your name], a student researcher at USC — and a fellow Trojan.</p>
-                  <p>A few of us are studying how professionals in private equity, M&amp;A diligence, and financial services actually organize and manage deal data day to day — the tools, the workarounds, the messy reality behind a deal. Your background at [Firm] is exactly the kind of perspective we're hoping to learn from.</p>
-                  <p>Could I borrow 20 minutes in the next week or two? It's a casual conversation — we're learning, not pitching, and there's nothing to prepare.</p>
-                  <p>Grab whatever's easiest here: [scheduling link] — or just reply and I'll work around your calendar.</p>
-                  <p>Fight on, [Your name]<br>[Program / year, USC]</p>
-                </div>
-              </div>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Email 2 · Day 4 — "The Bump"</summary>
-            <div class="leaf-body">
-              <div class="meta-row">
-                <div class="meta-item"><span class="k">Trigger</span><span class="v">No reply after Email 1 + 4-day delay</span></div>
-                <div class="meta-item"><span class="k">Objective</span><span class="v">Reply — win the top of the inbox</span></div>
-              </div>
-              <p><span class="leaf-tag">Automation</span>Split on open status. Most first emails are missed, not rejected — this email exists purely to win visibility again.</p>
-
-              <div class="email-card">
-                <span class="branch-tag">Branch A — opened, no reply</span>
-                <p class="subj">Subject: <em>Re: USC student research — 20 min on how you manage deal data?</em></p>
-                <p style="font-size:11.5px;color:var(--text-faint);margin:0 0 6px;">Sent as a threaded reply to Email 1 so it lands in the existing thread.</p>
-                <div class="body-text">
-                  <p>Hi [Name],</p>
-                  <p>Floating this back to the top in case it slipped by — no worries at all if the timing's tough. Even 15 minutes would be a real help, and I'll fit entirely around your schedule.</p>
-                  <p>[scheduling link]</p>
-                  <p>Fight on, [Your name]</p>
-                </div>
-              </div>
-
-              <div class="email-card">
-                <span class="branch-tag">Branch B — not opened</span>
-                <p class="subj">Subject: <em>Quick favor from a USC student, [Name]?</em></p>
-                <p style="font-size:11.5px;color:var(--text-faint);margin:0 0 6px;">Sent as a fresh email with a new subject line, since the first one clearly didn't land.</p>
-                <div class="body-text">
-                  <p>Hi [Name],</p>
-                  <p>Trying you once more with a better subject line. I'm a USC student researcher studying how people in PE and M&amp;A really manage their deal data — and I'd love 20 minutes of your perspective.</p>
-                  <p>Nothing to sell, nothing to prep: [scheduling link], or just reply with a couple of windows.</p>
-                  <p>Fight on, [Your name]</p>
-                </div>
-              </div>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Email 3 · Day 9 — "The Value Add"</summary>
-            <div class="leaf-body">
-              <div class="meta-row">
-                <div class="meta-item"><span class="k">Trigger</span><span class="v">No reply after Email 2 + 5-day delay</span></div>
-                <div class="meta-item"><span class="k">Objective</span><span class="v">Engagement — a reply or a link click</span></div>
-              </div>
-              <p><span class="leaf-tag">Automation</span>Track the click; if the scheduling link is clicked but no booking follows within 24h, fire Email A (booking recovery).</p>
-              <div class="email-card">
-                <p class="subj">Subject: <em>One question I keep hearing about (and can't answer yet)</em></p>
-                <div class="body-text">
-                  <p>Hi [Name],</p>
-                  <p>I'll keep this short. In the interviews we've done so far, one theme keeps surfacing: the real system of record for a deal often isn't the CRM or the data room — it's someone's inbox. I'd love to know whether that matches your experience.</p>
-                  <p>If a full call is tough, even a two-line reply to that one question would be gold. And if you're open to 20 minutes, I'm glad to share back what we're learning across the group — it's turned out to be genuinely interesting.</p>
-                  <p>[scheduling link]</p>
-                  <p>Thanks either way, [Your name]</p>
-                </div>
-              </div>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Email 4 · Day 16 —> "The Breakup"</summary>
-            <div class="leaf-body">
-              <div class="meta-row">
-                <div class="meta-item"><span class="k">Trigger</span><span class="v">No reply after Email 3 + 7-day delay</span></div>
-                <div class="meta-item"><span class="k">Objective</span><span class="v">Final reply, plus a clean, goodwill-preserving exit</span></div>
-              </div>
-              <p><span class="leaf-tag">Automation</span>On send, schedule the exit → tag <code>dormant</code>, suppress from this sequence, eligible for a fresh approach next term. Permission-style "last email" notes reliably outperform earlier sends — they remove pressure and create a mild last-chance effect.</p>
-              <div class="email-card">
-                <p class="subj">Subject: <em>I'll stop here — but the door's open</em></p>
-                <div class="body-text">
-                  <p>Hi [Name],</p>
-                  <p>I don't want to crowd your inbox, so this will be my last note. If a 20-minute conversation about how you manage deal data ever becomes easy, I'd still genuinely love it — just reply anytime and I'll make it work.</p>
-                  <p>Thank you for everything you do for the USC community.</p>
-                  <p>Fight on, [Your name]</p>
-                </div>
-              </div>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Email A — Booking recovery <span style="font-weight:400;color:var(--text-faint);">(utility)</span></summary>
-            <div class="leaf-body">
-              <div class="meta-row">
-                <div class="meta-item"><span class="k">Trigger</span><span class="v">Clicked scheduling link, no booking within 24h</span></div>
-                <div class="meta-item"><span class="k">Objective</span><span class="v">Complete the booking</span></div>
-              </div>
-              <div class="email-card">
-                <p class="subj">Subject: <em>Did the calendar give you trouble?</em></p>
-                <div class="body-text">
-                  <p>Hi [Name],</p>
-                  <p>Looks like you may have popped over to grab a time — if the link was clunky or nothing fit, just reply with a couple of windows that work and I'll lock it in on my end.</p>
-                  <p>Thanks! [Your name]</p>
-                </div>
-              </div>
-            </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Email C — Confirmation <span style="font-weight:400;color:var(--text-faint);">(utility)</span></summary>
-            <div class="leaf-body">
-              <div class="meta-row">
-                <div class="meta-item"><span class="k">Trigger</span><span class="v">Interview booked</span></div>
-                <div class="meta-item"><span class="k">Objective</span><span class="v">Reduce no-shows</span></div>
-              </div>
-              <div class="email-card">
-                <p class="subj">Subject: <em>Confirmed — [day / time], and thank you</em></p>
-                <div class="body-text">
-                  <p>Hi [Name],</p>
-                  <p>Thank you — you're on my calendar for [day / time]: [call link]. No prep needed; I'll bring the questions and keep us to 20 minutes flat.</p>
-                  <p>If anything comes up, just reply here.</p>
-                  <p>Fight on, [Your name]</p>
-                </div>
-              </div>
-            </div>
-          </details>
-
-        </div>
+    <div class="hub-cell">
+      <div class="hub" id="hub">
+        <p class="hub-title">USC alumni research interview sequence</p>
+        <p class="hub-sub">Automated outreach → book a 20-minute research interview</p>
       </div>
     </div>
 
-    <!-- LAYER 3: strategy rationale, full width, below layer 2 -->
-    <div class="row layer3-row">
-      <div class="branch branch-strat" id="b-strat">
-        <div class="branch-head"><span class="dot"></span><span>Strategy rationale</span></div>
-        <div class="leaves grid">
+    <!-- TOP LEFT: Campaign setup -->
+    <div class="branch branch-goal pos-tl" id="b-goal">
+      <div class="branch-title"><span class="dot"></span><span>Campaign setup</span></div>
+      <div class="leaves-scroll">
 
-          <details class="leaf">
-            <summary>Escalating delays (0 → 4 → 9 → 16)</summary>
-            <div class="leaf-body">
-              <p>Early follow-ups are tight because inbox attention decays fast; later ones widen because someone who hasn't replied by Day 9 needs space, not pressure. The cadence reads as persistent-but-respectful rather than needy.</p>
+        <details class="leaf" open>
+          <summary>Conversion goal</summary>
+          <div class="leaf-body">
+            <p>Book a 20-minute research interview with a USC-connected professional in private equity, M&amp;A diligence, or financial services, to learn how they organize and manage deal data.</p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Entry trigger — Day 0 starts</summary>
+          <div class="leaf-body">
+            <p>A contact is added to the outreach segment — the outreach-list equivalent of a "signup." In a marketing-automation platform this is the enrollment trigger: enter the sequence, tag <code>usc-finance-interview</code>, start Day 0.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <!-- TOP CENTER: Email sequence -->
+    <div class="branch branch-seq pos-tc" id="b-seq">
+      <div class="branch-title"><span class="dot"></span><span>Email sequence</span><span class="count">6 sends</span></div>
+      <div class="leaves-scroll">
+
+        <details class="leaf">
+          <summary>Sequence at a glance</summary>
+          <div class="leaf-body">
+            <div class="glance-list">
+              <div class="glance-row"><span class="gnum">1</span><span class="gtext"><b>Day 0</b> — contact added <i>→ reply / book</i></span></div>
+              <div class="glance-row"><span class="gnum">2</span><span class="gtext"><b>Day 4</b> — no reply, +4d <i>→ reply</i></span></div>
+              <div class="glance-row"><span class="gnum">3</span><span class="gtext"><b>Day 9</b> — no reply, +5d <i>→ engagement</i></span></div>
+              <div class="glance-row"><span class="gnum">4</span><span class="gtext"><b>Day 16</b> — no reply, +7d <i>→ final reply</i></span></div>
+              <div class="glance-row"><span class="gnum">A</span><span class="gtext"><b>+24h</b> — clicked, no booking <i>→ book</i></span></div>
+              <div class="glance-row"><span class="gnum">C</span><span class="gtext"><b>On booking</b> <i>→ reduce no-shows</i></span></div>
             </div>
-          </details>
+          </div>
+        </details>
 
-          <details class="leaf">
-            <summary>Each email changes its job, not just its wording</summary>
-            <div class="leaf-body">
-              <p>Email 1 asks. Email 2 fights for visibility (and adapts on open data). Email 3 adds value and shrinks the ask to a single question. Email 4 releases pressure and banks goodwill.</p>
-              <p>A sequence that just re-sends the same request four times trains people to ignore it.</p>
+        <details class="leaf">
+          <summary>Email 1 · Day 0 — "The Ask"</summary>
+          <div class="leaf-body">
+            <div class="meta-row">
+              <div class="meta-item"><span class="k">Trigger</span><span class="v">Contact enters the segment</span></div>
+              <div class="meta-item"><span class="k">Objective</span><span class="v">Reply or direct booking</span></div>
             </div>
-          </details>
-
-          <details class="leaf">
-            <summary>Behavior drives the branches</summary>
-            <div class="leaf-body">
-              <p>Opens decide Email 2's subject strategy. Clicks route to booking recovery instead of more nurture. Replies exit the flow entirely.</p>
-              <p>The automation is there to be invisible — the recipient should feel like a person is thoughtfully following up, never like they're inside a drip campaign.</p>
+            <p><span class="leaf-tag">Automation</span>Send immediately on enrollment; start open-tracking and link-tracking; set the 4-day timer for Email 2.</p>
+            <div class="email-card">
+              <p class="subj">Subject: <em>USC student research — 20 min on how you manage deal data?</em></p>
+              <div class="body-text">
+                <p>Hi [Name],</p>
+                <p>I'm [Your name], a student researcher at USC — and a fellow Trojan.</p>
+                <p>A few of us are studying how professionals in private equity, M&amp;A diligence, and financial services actually organize and manage deal data day to day — the tools, the workarounds, the messy reality behind a deal. Your background at [Firm] is exactly the kind of perspective we're hoping to learn from.</p>
+                <p>Could I borrow 20 minutes in the next week or two? It's a casual conversation — we're learning, not pitching, and there's nothing to prepare.</p>
+                <p>Grab whatever's easiest here: [scheduling link] — or just reply and I'll work around your calendar.</p>
+                <p>Fight on, [Your name]<br>[Program / year, USC]</p>
+              </div>
             </div>
-          </details>
+          </div>
+        </details>
 
-          <details class="leaf">
-            <summary>Objective progression</summary>
-            <div class="leaf-body">
-              <p>Reply/book → reply → engagement (reply or click) → final reply/exit.</p>
-              <p>Micro-conversions (an open, a click, a one-line answer) are treated as wins, because each one is a signal to re-route rather than keep pushing.</p>
+        <details class="leaf">
+          <summary>Email 2 · Day 4 — "The Bump"</summary>
+          <div class="leaf-body">
+            <div class="meta-row">
+              <div class="meta-item"><span class="k">Trigger</span><span class="v">No reply after Email 1 + 4-day delay</span></div>
+              <div class="meta-item"><span class="k">Objective</span><span class="v">Reply — win the top of the inbox</span></div>
             </div>
-          </details>
+            <p><span class="leaf-tag">Automation</span>Split on open status. Most first emails are missed, not rejected — this email exists purely to win visibility again.</p>
 
-        </div>
+            <div class="email-card">
+              <span class="branch-tag">Branch A — opened, no reply</span>
+              <p class="subj">Subject: <em>Re: USC student research — 20 min on how you manage deal data?</em></p>
+              <p style="font-size:10px;color:var(--text-faint);margin:0 0 5px;">Sent as a threaded reply to Email 1 so it lands in the existing thread.</p>
+              <div class="body-text">
+                <p>Hi [Name],</p>
+                <p>Floating this back to the top in case it slipped by — no worries at all if the timing's tough. Even 15 minutes would be a real help, and I'll fit entirely around your schedule.</p>
+                <p>[scheduling link]</p>
+                <p>Fight on, [Your name]</p>
+              </div>
+            </div>
+
+            <div class="email-card">
+              <span class="branch-tag">Branch B — not opened</span>
+              <p class="subj">Subject: <em>Quick favor from a USC student, [Name]?</em></p>
+              <p style="font-size:10px;color:var(--text-faint);margin:0 0 5px;">Sent as a fresh email with a new subject line, since the first one clearly didn't land.</p>
+              <div class="body-text">
+                <p>Hi [Name],</p>
+                <p>Trying you once more with a better subject line. I'm a USC student researcher studying how people in PE and M&amp;A really manage their deal data — and I'd love 20 minutes of your perspective.</p>
+                <p>Nothing to sell, nothing to prep: [scheduling link], or just reply with a couple of windows.</p>
+                <p>Fight on, [Your name]</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Email 3 · Day 9 — "The Value Add"</summary>
+          <div class="leaf-body">
+            <div class="meta-row">
+              <div class="meta-item"><span class="k">Trigger</span><span class="v">No reply after Email 2 + 5-day delay</span></div>
+              <div class="meta-item"><span class="k">Objective</span><span class="v">Engagement — a reply or a link click</span></div>
+            </div>
+            <p><span class="leaf-tag">Automation</span>Track the click; if the scheduling link is clicked but no booking follows within 24h, fire Email A (booking recovery).</p>
+            <div class="email-card">
+              <p class="subj">Subject: <em>One question I keep hearing about (and can't answer yet)</em></p>
+              <div class="body-text">
+                <p>Hi [Name],</p>
+                <p>I'll keep this short. In the interviews we've done so far, one theme keeps surfacing: the real system of record for a deal often isn't the CRM or the data room — it's someone's inbox. I'd love to know whether that matches your experience.</p>
+                <p>If a full call is tough, even a two-line reply to that one question would be gold. And if you're open to 20 minutes, I'm glad to share back what we're learning across the group — it's turned out to be genuinely interesting.</p>
+                <p>[scheduling link]</p>
+                <p>Thanks either way, [Your name]</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Email 4 · Day 16 — "The Breakup"</summary>
+          <div class="leaf-body">
+            <div class="meta-row">
+              <div class="meta-item"><span class="k">Trigger</span><span class="v">No reply after Email 3 + 7-day delay</span></div>
+              <div class="meta-item"><span class="k">Objective</span><span class="v">Final reply, plus a clean, goodwill-preserving exit</span></div>
+            </div>
+            <p><span class="leaf-tag">Automation</span>On send, schedule the exit → tag <code>dormant</code>, suppress from this sequence, eligible for a fresh approach next term. Permission-style "last email" notes reliably outperform earlier sends.</p>
+            <div class="email-card">
+              <p class="subj">Subject: <em>I'll stop here — but the door's open</em></p>
+              <div class="body-text">
+                <p>Hi [Name],</p>
+                <p>I don't want to crowd your inbox, so this will be my last note. If a 20-minute conversation about how you manage deal data ever becomes easy, I'd still genuinely love it — just reply anytime and I'll make it work.</p>
+                <p>Thank you for everything you do for the USC community.</p>
+                <p>Fight on, [Your name]</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Email A — Booking recovery <span style="font-weight:400;color:var(--text-faint);">(utility)</span></summary>
+          <div class="leaf-body">
+            <div class="meta-row">
+              <div class="meta-item"><span class="k">Trigger</span><span class="v">Clicked link, no booking within 24h</span></div>
+              <div class="meta-item"><span class="k">Objective</span><span class="v">Complete the booking</span></div>
+            </div>
+            <div class="email-card">
+              <p class="subj">Subject: <em>Did the calendar give you trouble?</em></p>
+              <div class="body-text">
+                <p>Hi [Name],</p>
+                <p>Looks like you may have popped over to grab a time — if the link was clunky or nothing fit, just reply with a couple of windows that work and I'll lock it in on my end.</p>
+                <p>Thanks! [Your name]</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Email C — Confirmation <span style="font-weight:400;color:var(--text-faint);">(utility)</span></summary>
+          <div class="leaf-body">
+            <div class="meta-row">
+              <div class="meta-item"><span class="k">Trigger</span><span class="v">Interview booked</span></div>
+              <div class="meta-item"><span class="k">Objective</span><span class="v">Reduce no-shows</span></div>
+            </div>
+            <div class="email-card">
+              <p class="subj">Subject: <em>Confirmed — [day / time], and thank you</em></p>
+              <div class="body-text">
+                <p>Hi [Name],</p>
+                <p>Thank you — you're on my calendar for [day / time]: [call link]. No prep needed; I'll bring the questions and keep us to 20 minutes flat.</p>
+                <p>If anything comes up, just reply here.</p>
+                <p>Fight on, [Your name]</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <!-- TOP RIGHT: The governing rule -->
+    <div class="branch branch-rule pos-tr" id="b-rule">
+      <div class="branch-title"><span class="dot"></span><span>The governing rule</span></div>
+      <div class="leaves-scroll">
+
+        <details class="leaf" open>
+          <summary>Reply detection exits the sequence</summary>
+          <div class="leaf-body">
+            <p>The instant a contact replies, they leave the automated flow and a person takes over scheduling. No lead should ever receive an automated "just bumping this" email after they've already answered.</p>
+            <p>Every send carries the implicit condition: <em>only if no reply has been received.</em></p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Two positive off-ramps</summary>
+          <div class="leaf-body">
+            <p>Booking via the scheduling link exits the sequence entirely.</p>
+            <p>Clicking the link but not finishing routes to a short booking-recovery note (Email A) rather than the next nurture email.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <!-- BOTTOM LEFT: Micro-personas -->
+    <div class="branch branch-pers pos-bl" id="b-pers">
+      <div class="branch-title"><span class="dot"></span><span>Micro-personas</span></div>
+      <div class="leaves-scroll">
+
+        <details class="leaf">
+          <summary>The Generous Mentor</summary>
+          <div class="leaf-body">
+            <p>Senior alum (Partner / MD / Principal). Time-poor but emotionally motivated to give back and mentor students. Moved by Trojan identity, legacy, and being thanked rather than sold to.</p>
+            <p><span class="leaf-tag">Targeted by</span>Email 1's "fellow Trojan" open, and Email 4, which thanks them and leaves the door open with zero guilt.</p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>The Busy Operator</summary>
+          <div class="leaf-body">
+            <p>Mid-to-senior alum (VP / Director). Slammed, protective of time, and instinctively reads outreach as a sales trap. Needs specificity, brevity, the explicit "not pitching," and a one-tap path.</p>
+            <p><span class="leaf-tag">Targeted by</span>Email 1's low-friction framing, Email 2's 15-minute flex, and the scheduling link throughout.</p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>The Curious Peer</summary>
+          <div class="leaf-body">
+            <p>Junior alum (Associate / Senior Associate). Recently a student, intellectually engaged, relates to the research itself. Won't move for "help a student," but will move for an interesting idea.</p>
+            <p><span class="leaf-tag">Targeted by</span>Email 3, which leads with the finding, shrinks the ask to one question, and offers to share results back.</p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Why this covers everyone</summary>
+          <div class="leaf-body">
+            <p>Each persona is reached by a different email, so a single sequence covers the whole recipient spectrum without segmenting the list up front.</p>
+            <p style="font-size:10px;color:var(--text-faint);">Note: if your course requires your own validated micro-personas, swap these in — the structure maps cleanly onto whichever set you're graded against.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <!-- BOTTOM RIGHT: Strategy rationale -->
+    <div class="branch branch-strat pos-br" id="b-strat">
+      <div class="branch-title"><span class="dot"></span><span>Strategy rationale</span></div>
+      <div class="leaves-scroll">
+
+        <details class="leaf">
+          <summary>Escalating delays (0 → 4 → 9 → 16)</summary>
+          <div class="leaf-body">
+            <p>Early follow-ups are tight because inbox attention decays fast; later ones widen because someone who hasn't replied by Day 9 needs space, not pressure.</p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Each email changes its job</summary>
+          <div class="leaf-body">
+            <p>Email 1 asks. Email 2 fights for visibility. Email 3 adds value and shrinks the ask. Email 4 releases pressure and banks goodwill.</p>
+            <p>A sequence that just re-sends the same request trains people to ignore it.</p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Behavior drives the branches</summary>
+          <div class="leaf-body">
+            <p>Opens decide Email 2's subject strategy. Clicks route to booking recovery. Replies exit the flow entirely.</p>
+            <p>The automation is there to be invisible — never like a drip campaign.</p>
+          </div>
+        </details>
+
+        <details class="leaf">
+          <summary>Objective progression</summary>
+          <div class="leaf-body">
+            <p>Reply/book → reply → engagement → final reply/exit.</p>
+            <p>Micro-conversions are treated as wins — each is a signal to re-route rather than keep pushing.</p>
+          </div>
+        </details>
+
       </div>
     </div>
 
@@ -474,17 +460,16 @@
 </div>
 
 <script>
+  function scheduleRedraw(){ requestAnimationFrame(drawConnectors); }
   document.getElementById('expandAll').addEventListener('click', () => {
     document.querySelectorAll('details.leaf').forEach(d => d.open = true);
-    requestAnimationFrame(drawConnectors);
+    scheduleRedraw();
   });
   document.getElementById('collapseAll').addEventListener('click', () => {
     document.querySelectorAll('details.leaf').forEach(d => d.open = false);
-    requestAnimationFrame(drawConnectors);
+    scheduleRedraw();
   });
-  document.querySelectorAll('details.leaf').forEach(d => {
-    d.addEventListener('toggle', () => requestAnimationFrame(drawConnectors));
-  });
+  document.querySelectorAll('details.leaf').forEach(d => d.addEventListener('toggle', scheduleRedraw));
 
   const colors = { 'b-goal':'#2F5D8A', 'b-rule':'#990000', 'b-seq':'#0F6E56', 'b-pers':'#B8860B', 'b-strat':'#5B4B8A' };
   const darkColors = { 'b-goal':'#8FBADD', 'b-rule':'#E48787', 'b-seq':'#7FCBB0', 'b-pers':'#E4C067', 'b-strat':'#B6A9E0' };
@@ -495,69 +480,35 @@
 
   function drawConnectors(){
     const diagram = document.getElementById('diagram');
-    const trunk = document.getElementById('trunk');
+    const hub = document.getElementById('hub');
     const svg = document.getElementById('connectors');
     const dRect = diagram.getBoundingClientRect();
-    const tRect = trunk.getBoundingClientRect();
-    const trunkY = tRect.top - dRect.top + 1;
+    const hRect = hub.getBoundingClientRect();
 
     svg.setAttribute('viewBox', '0 0 ' + dRect.width + ' ' + dRect.height);
-    svg.setAttribute('height', dRect.height);
     while (svg.firstChild) svg.removeChild(svg.firstChild);
 
-    function pt(x,y,color){
-      const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
-      c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',3.5);
-      c.setAttribute('fill',color);
-      svg.appendChild(c);
-    }
-    function line(pathD, color){
-      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
-      p.setAttribute('d', pathD); p.setAttribute('fill','none');
-      p.setAttribute('stroke', color); p.setAttribute('stroke-width','1.75');
+    const hubCenter = { x: hRect.left - dRect.left + hRect.width/2, y: hRect.top - dRect.top + hRect.height/2 };
+
+    function line(x1,y1,x2,y2,color){
+      const p = document.createElementNS('http://www.w3.org/2000/svg','line');
+      p.setAttribute('x1',x1); p.setAttribute('y1',y1); p.setAttribute('x2',x2); p.setAttribute('y2',y2);
+      p.setAttribute('stroke', color); p.setAttribute('stroke-width','2');
+      p.setAttribute('stroke-linecap','round');
       svg.appendChild(p);
     }
 
-    // Layer 1: three branches drop straight down from the trunk
-    ['b-goal','b-rule','b-pers'].forEach(id => {
-      const el = document.getElementById(id).querySelector('.branch-head');
+    ['b-goal','b-seq','b-rule','b-pers','b-strat'].forEach(id => {
+      const el = document.getElementById(id);
       const r = el.getBoundingClientRect();
-      const x = r.left - dRect.left + r.width/2;
-      const yTop = r.top - dRect.top;
-      const color = currentColor(id);
-      line('M '+x+' '+trunkY+' L '+x+' '+yTop, color);
-      pt(x, trunkY, color);
+      const cx = r.left - dRect.left + r.width/2;
+      const cy = r.top - dRect.top + r.height/2;
+      line(hubCenter.x, hubCenter.y, cx, cy, currentColor(id));
     });
-
-    // Layer 2 (email sequence): fixed right-margin lane, clears layer 1, elbows into the box
-    (function(){
-      const el = document.getElementById('b-seq').querySelector('.branch-head');
-      const r = el.getBoundingClientRect();
-      const laneX = dRect.width - 44;
-      const targetX = r.left - dRect.left + r.width/2;
-      const targetY = r.top - dRect.top;
-      const jogY = targetY - 18;
-      const color = currentColor('b-seq');
-      line('M '+laneX+' '+trunkY+' L '+laneX+' '+jogY+' L '+targetX+' '+jogY+' L '+targetX+' '+targetY, color);
-      pt(laneX, trunkY, color);
-    })();
-
-    // Layer 3 (strategy rationale): fixed right-margin lane further out, clears layers 1 + 2
-    (function(){
-      const el = document.getElementById('b-strat').querySelector('.branch-head');
-      const r = el.getBoundingClientRect();
-      const laneX = dRect.width - 16;
-      const targetX = r.left - dRect.left + r.width/2;
-      const targetY = r.top - dRect.top;
-      const jogY = targetY - 18;
-      const color = currentColor('b-strat');
-      line('M '+laneX+' '+trunkY+' L '+laneX+' '+jogY+' L '+targetX+' '+jogY+' L '+targetX+' '+targetY, color);
-      pt(laneX, trunkY, color);
-    })();
   }
 
   window.addEventListener('load', () => { drawConnectors(); setTimeout(drawConnectors, 300); });
-  window.addEventListener('resize', () => requestAnimationFrame(drawConnectors));
+  window.addEventListener('resize', scheduleRedraw);
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(drawConnectors); }
 </script>
 
